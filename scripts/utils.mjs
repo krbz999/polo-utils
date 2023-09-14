@@ -32,7 +32,7 @@ async function wait(ms) {
 * 
 * @example Change a token's vision to Darkvision with a range of 60ft
 * ```js
-* await polo.utils.changeTokenSight(token, {visionMode: "darkvision", range: 60});
+* await polo.utils.updateTokenSight(token, {visionMode: "darkvision", range: 60});
 * ``` 
 */
 async function updateTokenSight(token, config={}){
