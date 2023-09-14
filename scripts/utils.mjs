@@ -1,7 +1,7 @@
 export {
-    wait,
-    updateTokenSight,
-    shuffleArray
+  wait,
+  updateTokenSight,
+  shuffleArray
 }
 
 
@@ -10,7 +10,7 @@ export {
 * @returns {Promise<void>}        		 A promise that resolves to a void.
 */
 async function wait(ms) {
-    return new Promise(r => setTimeout(r, ms));
+  return new Promise(r => setTimeout(r, ms));
 }
 
 /*
@@ -36,12 +36,12 @@ async function wait(ms) {
 * ``` 
 */
 async function updateTokenSight(token, config={}){
-    if(token instanceof Token) token = token.document;
-    config = foundry.utils.mergeObject(token.sight, config);
-    if(!(config.visionMode in CONFIG.Canvas.visionModes)) return ui.notifications.error(`Vision mode: ${config.visionMode}, is not a valid vision mode.`)
-    await token.update({sight: config});
-    await token.updateVisionMode(config.visionMode);
-    return token;
+  if(token instanceof Token) token = token.document;
+  config = foundry.utils.mergeObject(token.sight, config);
+  if(!(config.visionMode in CONFIG.Canvas.visionModes)) return ui.notifications.error(`Vision mode: ${config.visionMode}, is not a valid vision mode.`)
+  await token.update({sight: config});
+  await token.updateVisionMode(config.visionMode);
+  return token;
 }
 
 
@@ -52,10 +52,10 @@ async function updateTokenSight(token, config={}){
 * @returns {array} arr                  The shuffled array.
 */
 function shuffleArray(original) {
-    let arr = JSON.parse(JSON.stringify(orignal))
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
+  let arr = JSON.parse(JSON.stringify(orignal))
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }
