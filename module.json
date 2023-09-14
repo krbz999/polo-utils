@@ -1,0 +1,42 @@
+{
+    "id": "polo-utils",
+    "title": "Polo Utils",
+    "description": "A collection of utilities and macros for use with Foundry VTT.",
+    "version": "1.0.0",
+    "authors": [
+	{
+	    "name": "Flix",
+            "url": "https://github.com/GamerFlix",
+            "discord": "gamerflixy"
+    },{
+      "name": "Zhell",
+      "url": "https://github.com/krbz999",
+      "discord": "Zhell9201",
+      "ko-fi": "https://ko-fi.com/zhell",
+      "patreon": "https://patreon.com/zhell"
+    },{
+      "name": "Freeze",
+      "discord": "freeze2689"
+    }
+	],
+    "esmodules": [
+        "module.mjs"
+    ],
+    "languages": [
+        {
+        "lang": "en",
+        "name": "English",
+        "path": "lang/en.json"
+        }
+    ],
+    "styles": [
+    ],
+    "socket": false,
+    "url": "",
+    "manifest": "",
+    "download": "",
+    "compatibility":{
+        "minimum":11,
+        "verified":"11"
+    }
+}
