@@ -1,7 +1,8 @@
 export {
   wait,
   updateTokenSight,
-  shuffleArray
+  shuffleArray,
+  sortArray
 }
 
 
@@ -61,4 +62,47 @@ function shuffleArray(original) {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
+}
+
+function _sortFunction(a,b, lowToHigh){
+  if(typeof(a) === "number") {
+    if(a>b) return lowToHigh ?  1 : -1;
+    else if(a<b) return lowToHigh ? -1 :  1;
+    else return 0;
+  }
+  if(typeof(a) === "string") {
+    return lowToHigh ? a.localeCompare(b) : b.localeCompare(a);
+  }   
+  console.error(`value to sort is not of type String or type Number`);
+  return 0; // keeps element in the same spot.
+}
+
+
+/*
+* @params {array} original                The original array
+* @params {string} key                    String dot notation of the key pointing to the value you want to sort on, if the original array is an array of objects.
+* @params {boolean} lowToHigh             Sort direction low to high is the default sort direction, adding lowToHigh: false sorts high to low.
+*
+* @example
+* ```js
+* const test = token.actor.itemTypes.weapon;
+* const testObj = [{x:5},{x:3},{x:2},{x:6},{x:1},{x:4}];
+* const testNumbers = [3,2,4,6,1,5];
+* const testString = ["Aardvark", "Zebra", "Elephant", "Orang Utan"];
+* 
+* const sortedTest = polo.utils.sortArray(test, {key: "system.price.value"}); // result: varies on the input but should be cheap to expensive in DND5e.
+* const sortedTestObj =  polo.utils.sortArray(testObj, {key: "x", lowToHigh: false}); // result: [{x:6},{x:5},{x:4},{x:3},{x:2},{x:1}];
+* const sortedTestString =  polo.utils.sortArray(testString); // result: ["Aardvark", "Elephant", "Orang Utan", "Zebra"]
+* const sortedTestNumbers =  polo.utils.sortArray(testNumbers, {lowToHigh: false}); // result: [6,5,4,3,2,1]
+* console.log(sortedTest, sortedTestObj,sortedTestString, sortedTestNumbers)
+* ```
+*/
+function sortArray(original, {key=null, lowToHigh=true}={}){
+  let arr = [...original];
+  if(key === null) return arr.sort((a,b) => _sortFunction(a,b,lowToHigh));
+  else return arr.sort((a,b)=>{
+    const x = foundry.utils.getProperty(a, key);
+    const y = foundry.utils.getProperty(b, key);
+    return _sortFunction(x,y,lowToHigh)
+  });
 }
