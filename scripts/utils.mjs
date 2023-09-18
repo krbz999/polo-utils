@@ -100,7 +100,7 @@ function _sortFunction(a,b, lowToHigh){
 */
 function sortArray(original, {key=null, lowToHigh=true}={}){
   let arr = [...original];
-  if(key === null) return arr.sort((a,b) => _sortFunction(a,b,lowToHigh));
+  if(typeof key !== "string") return arr.sort((a,b) => _sortFunction(a,b,lowToHigh));
   else return arr.sort((a,b)=>{
     const x = foundry.utils.getProperty(a, key);
     const y = foundry.utils.getProperty(b, key);
