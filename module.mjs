@@ -1,5 +1,5 @@
 import * as utils from "./scripts/utils.mjs";
-const MODULE_ID = "polo-utils"; 
+export const MODULE_ID = "polo-utils"; 
 
 
 Hooks.once("ready", ()=>{

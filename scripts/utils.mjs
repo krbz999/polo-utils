@@ -1,3 +1,4 @@
+import { MODULE_ID } from "../module.mjs";
 export {
   wait,
   updateTokenSight,
