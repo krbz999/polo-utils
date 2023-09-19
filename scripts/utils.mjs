@@ -34,7 +34,7 @@ function rotateAround(point,pivot,degrees){
   return {x: newPoint.x + pivot.x, y: newPoint.y + pivot.y};
 }
 
-/*
+/**
 * @param {number} ms                        A time in milliseconds.
 * @returns {Promise<void>}                  A promise that resolves to a void.
 */
@@ -77,11 +77,10 @@ async function updateTokenSight(token, config={}){
 }
 
 
-/*
+/**
 * Function to shuffle an array and return a new array leaving the original untouched.
 * @param {array} original                   The original array.
-*
-* @returns {array} arr                      The shuffled array.
+* @returns {array}                          The shuffled array.
 */
 function shuffleArray(original) {
   let arr = [...original]
@@ -106,10 +105,10 @@ function _sortFunction(a,b, lowToHigh){
 }
 
 
-/*
-* @params {array} original                The original array
-* @params {string} key                    String dot notation of the key pointing to the value you want to sort on, if the original array is an array of objects.
-* @params {boolean} lowToHigh             Sort direction low to high is the default sort direction, adding lowToHigh: false sorts high to low.
+/**
+* @param {array} original                The original array
+* @param {string} key                    String dot notation of the key pointing to the value you want to sort on, if the original array is an array of objects.
+* @param {boolean} lowToHigh             Sort direction low to high is the default sort direction, adding lowToHigh: false sorts high to low.
 *
 * @example
 * ```js
@@ -124,6 +123,7 @@ function _sortFunction(a,b, lowToHigh){
 * const sortedTestNumbers =  polo.utils.sortArray(testNumbers, {lowToHigh: false}); // result: [6,5,4,3,2,1]
 * console.log(sortedTest, sortedTestObj,sortedTestString, sortedTestNumbers)
 * ```
+* @returns {array}                      Sorted array.
 */
 function sortArray(original, {key=null, lowToHigh=true}={}){
   let arr = [...original];
