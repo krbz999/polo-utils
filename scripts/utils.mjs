@@ -3,9 +3,36 @@ export {
   wait,
   updateTokenSight,
   shuffleArray,
-  sortArray
+  sortArray,
+  rotateAround
 }
 
+/**
+ * Rotates the point around the pivot by the specified degrees
+ * Credit to https://stackoverflow.com/questions/2259476/rotating-a-point-about-another-point-2d, I just translated it to javascript
+ * @param {object} point                  A point {x,y} that is to be rotated
+ * @param {object} pivot                  A point {x,y} that the point is to be rotated around
+ * @param {number} degrees                A number in degrees specifiying by how many degrees the point is to be rotated
+ * @returns {object}                      The rotated point {x,y}
+ */
+function rotateAround(point,pivot,degrees){
+  const degreesRad=degrees*(Math.PI/180)
+  const sinus=Math.sin(degreesRad)
+  const cosinus=Math.cos(degreesRad)
+  
+  // Translate back to origin 
+  point.x-=pivot.x
+  point.y-=pivot.y
+  
+  let newPoint={}
+  newPoint.x=point.x*cosinus-point.y*sinus
+  newPoint.y=point.x*sinus+point.y*cosinus
+  
+  point.x=newPoint.x+pivot.x
+  point.y=newPoint.y+pivot.y
+  
+  return point
+}
 
 /*
 * @param {number} ms                        A time in milliseconds.
