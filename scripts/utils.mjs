@@ -16,7 +16,7 @@ export {
  * @returns {object}                      The rotated point {x,y}
  */
 function rotateAround(point,pivot,degrees){
-  const degreesRad=degrees*(Math.PI/180)
+  const degreesRad=Math.toRadians(degrees)
   const sinus=Math.sin(degreesRad)
   const cosinus=Math.cos(degreesRad)
   
@@ -24,14 +24,14 @@ function rotateAround(point,pivot,degrees){
   point.x-=pivot.x
   point.y-=pivot.y
   
-  let newPoint={}
-  newPoint.x=point.x*cosinus-point.y*sinus
-  newPoint.y=point.x*sinus+point.y*cosinus
+  // Compute rotation
+  const newPoint = {
+    x: point.x * cosinus - point.y * sinus,
+    y: point.x * sinus + point.y * cosinus
+  }
   
-  point.x=newPoint.x+pivot.x
-  point.y=newPoint.y+pivot.y
-  
-  return point
+  // Add pivot back in and return
+  return {x: newPoint.x + pivot.x, y: newPoint.y + pivot.y};
 }
 
 /*
