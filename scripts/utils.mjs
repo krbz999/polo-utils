@@ -158,7 +158,7 @@ function getDefaultName(path){
  * @param {boolean} [loop=true]               Loop or not, default false.
  *  
  */
-async function playSoundForOthers(src, users=[], {volume=1,loop=false}={}) {
+function playSoundForOthers(src, users=[], {volume=1,loop=false}={}) {
   const ids = users.reduce((acc,u) => {
     const id = u instanceof User ? u.id : game.users.has(u) ? u : null;
     if(id) acc.push(id);
