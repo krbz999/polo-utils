@@ -47,7 +47,7 @@ async function wait(ms) {
 /**
  * Function to update the sight of a Token. Function takes both a token placeable and a token document, 
  * as well as a config object, which can contain all the options for a Token's sight.
- * @param {Token/TokenDocument} token        A token or token document.
+ * @param {Token|TokenDocument} token        A token or token document.
  * @param {object} config                    Configuration changes to the token's sight.
  * @param {number} config.angle              degrees of vision, between 1 and 360.
  * @param {number} config.attenuation        Attenuation value of sight, between 0 and 1.
@@ -59,7 +59,7 @@ async function wait(ms) {
  * @param {number} config.saturation         Saturation of sight, between -1 and 1.
  * @param {string} config.visionMode         Vision mode, eg. darkvision or monochromatic etc.
  * 
- * @returns {null/Promise<document>} token   The updated token document.
+ * @returns {Promise<null|TokenDocument>}    The updated token document.
  * 
  * @example Change a token's vision to Darkvision with a range of 60ft
  * ```js
@@ -158,15 +158,15 @@ function getDefaultName(path){
  * @param {boolean} [loop=true]               Loop or not, default false.
  *  
  */
-function playSoundForOthers(src, users=[], {volume=1,loop=false}={}) {
-  const ids = users.reduce((acc,u) => {
+function playSoundForOthers(src, users=[], {volume=1, loop=false}={}) {
+  const ids = users.reduce((acc, u) => {
     const id = u instanceof User ? u.id : game.users.has(u) ? u : null;
-    if(id) acc.push(id);
+    if (id) acc.push(id);
     return acc;
-  },[]);
-  if(ids.length) {
+  }, []);
+  if (ids.length) {
     game.socket.emit("playAudio", {src, volume, loop}, {recipients: ids});
-    ui.notifications.info(`sound: ${src} is playing for selected users.`);
+    ui.notifications.info(`Playing: ${getDefaultName(src)} for selected users.`);
   }
   else ui.notifications.error("No valid users/user ids were added");
 }
