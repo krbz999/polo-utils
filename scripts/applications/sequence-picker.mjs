@@ -30,9 +30,14 @@ export class SequencePicker extends Application {
     this.model = new SequencePickerModel(config);
   }
 
+  /**
+   * Images used for placed and unplaced points.
+   * @type {string}
+   */
   static PLACED_IMG = "icons/sundries/flags/banner-flag-blue.webp";
   static UNPLACED_IMG = "icons/sundries/flags/banner-flag-white-mountain.webp";
 
+  /** @override */
   get title() {
     return game.i18n.localize("POLO.SequencePicker");
   }
@@ -145,7 +150,6 @@ export class SequencePicker extends Application {
     pos.height = "auto";
     return super.setPosition(pos);
   }
-
 
   /**
    * Create an instance of this application and wait for the callback.
