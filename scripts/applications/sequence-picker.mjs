@@ -25,11 +25,7 @@ export class SequencePicker extends Application {
   constructor(config = {}) {
     super({});
     this.callback = config.callback ?? (() => {});
-    config = foundry.utils.mergeObject({
-      links: 10,
-      distance: 60,
-      sequence: []
-    }, config);
+    config = foundry.utils.mergeObject({links: 10, sequence: []}, config);
     if ("origin" in config) config.sequence.unshift(config.origin);
     this.model = new SequencePickerModel(config);
   }
