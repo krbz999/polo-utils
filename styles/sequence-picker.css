@@ -16,7 +16,7 @@
 .polo-utils-sequence-picker .link img.inactive {
   filter: grayscale(1);
 }
-.sequence-picker .label {
+.polo-utils-sequence-picker .label {
   font-family: "Modesto Condensed";
   font-size: 35px;
 }
