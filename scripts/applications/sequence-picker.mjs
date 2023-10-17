@@ -120,6 +120,12 @@ export class SequencePicker extends Dialog {
       spr.anchor.set(0.5);
       spr.height = spr.width = canvas.grid.size;
       const sprite = canvas.effects.addChildAt(spr, point);
+      const mask = new PIXI.Graphics()
+        .beginFill("WHITE",1)
+        .drawCircle(0, 0, 0.5 * sprite.texture.baseTexture.width)
+        .endFill();
+      sprite.addChild(mask);
+      sprite.mask = mask;
       this.sprites.add(sprite);
     }
     return super.render(...args);
