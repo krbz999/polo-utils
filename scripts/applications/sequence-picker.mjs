@@ -6,10 +6,10 @@ class SequencePickerModel extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
-      links: new fields.NumberField({min: 0, integer: true}),
+      links: new fields.NumberField({positive: true, integer: true}),
       sequence: new fields.SetField(new fields.SchemaField({
-        x: new fields.NumberField(),
-        y: new fields.NumberField()
+        x: new fields.NumberField({step: 0.5}),
+        y: new fields.NumberField({step: 0.5})
       }))
     };
   }
@@ -88,10 +88,8 @@ export class SequencePicker extends Application {
 
   /** Handle click events on the canvas. */
   _onClickCanvas() {
-    let {x, y} = canvas.mousePosition;
-    x = x.toNearest(0.5);
-    y = y.toNearest(0.5);
-    const sequence = [...this.model.sequence, {x, y}].slice(0, this.model.links);
+    const point = canvas.mousePosition;
+    const sequence = [...this.model.sequence, point].slice(0, this.model.links);
     this.model.updateSource({sequence: sequence});
     this.render();
   }
