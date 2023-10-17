@@ -1,7 +1,10 @@
 /** TARGET SEQUENCE PICKER */
 .polo-utils-sequence-picker {
-  height: auto !important;
+  height: auto;
   width: 200px;
+}
+.polo-utils-sequence-picker .links {
+  border: 2px inset;
 }
 .polo-utils-sequence-picker .link {
   padding: 0.5em 0;
@@ -12,11 +15,9 @@
   width: 50px;
   height: 50px;
   border: none;
+  cursor: pointer;
 }
-.polo-utils-sequence-picker .link img.inactive {
+.polo-utils-sequence-picker .link img:not(.active) {
   filter: grayscale(1);
-}
-.polo-utils-sequence-picker .label {
-  font-family: "Modesto Condensed";
-  font-size: 35px;
+  cursor: default;
 }

@@ -1,9 +1,8 @@
 <div class="content">
-  <span class="label">{{localize "POLO.SequencePicker"}}</span>
   <div class="links">
     {{#each sequence as |link idx|}}
     <div class="link">
-      <img src="{{link.img}}" data-idx="{{idx}}" {{#unless link.point}} class="inactive" {{/unless}}>
+      <img src="{{link.img}}" data-idx="{{idx}}" {{#if link.point}} class="active" {{/if}}>
       {{#if link.point}}<div class="point">({{link.point.x}}, {{link.point.y}})</div>{{/if}}
     </div>
     {{/each}}

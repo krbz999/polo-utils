@@ -1,15 +1,12 @@
 /**
  * A utility application to pick a sequence of targets.
  */
-
 class SequencePickerModel extends foundry.abstract.DataModel {
   /** @override */
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
-      linkDistance: new fields.NumberField({min: 0}),
       links: new fields.NumberField({min: 0, integer: true}),
-      maxDistance: new fields.NumberField({min: 0}),
       sequence: new fields.SetField(new fields.SchemaField({
         x: new fields.NumberField(),
         y: new fields.NumberField()
@@ -18,27 +15,27 @@ class SequencePickerModel extends foundry.abstract.DataModel {
   }
 }
 
-export class SequencePicker extends Dialog {
+export class SequencePicker extends Application {
   /**
    * @constructor
-   * @param {number} [linkDistance=60]      The maximum distance between each link in the chain.
-   * @param {number} [links=10]             The maximum number of links in the chain.
-   * @param {object} [origin]               An originating point of the chain.
-   * @param {number} [maxDistance=60]       The maximum distance that any link in the chain is allowed from the origin.
-   * @param {object[]} [sequence=[]]        An array of points.
+   * @param {number} [links=10]           The maximum number of links in the chain.
+   * @param {object} [origin]             An originating point of the chain.
+   * @param {object[]} [sequence=[]]      An array of points.
    */
   constructor(config = {}) {
     super({});
     this.callback = config.callback ?? (() => {});
     config = foundry.utils.mergeObject({
-      linkDistance: 60,
       links: 10,
-      maxDistance: 60,
+      distance: 60,
       sequence: []
     }, config);
     if ("origin" in config) config.sequence.unshift(config.origin);
     this.model = new SequencePickerModel(config);
   }
+
+  static PLACED_IMG = "icons/sundries/flags/banner-flag-blue.webp";
+  static UNPLACED_IMG = "icons/sundries/flags/banner-flag-white-mountain.webp";
 
   get title() {
     return game.i18n.localize("POLO.SequencePicker");
@@ -57,15 +54,10 @@ export class SequencePicker extends Dialog {
 
   /** @override */
   async getData() {
-    const unplaced = "icons/sundries/flags/banner-flag-white-mountain.webp";
-    const placed = "icons/sundries/flags/banner-flag-blue.webp";
-
-    const sequence = new Array(this.model.links).fill({img: unplaced});
-    this.model.sequence.map((point, idx) => sequence[idx] = {point: point, img: placed});
-
+    const sequence = new Array(this.model.links).fill({img: this.constructor.UNPLACED_IMG});
+    this.model.sequence.map((point, idx) => sequence[idx] = {point: point, img: this.constructor.PLACED_IMG});
     const links = [...this.model.sequence];
     const canAdd = links.length < this.model.links;
-
     return {sequence, canAdd};
   }
 
@@ -78,6 +70,19 @@ export class SequencePicker extends Dialog {
       this.listener = listener;
     }
     html[0].querySelector("[data-action='submit']").addEventListener("click", this.submit.bind(this));
+    html[0].querySelectorAll("[data-idx].active").forEach(n => n.addEventListener("click", this._onClickIdx.bind(this)));
+  }
+
+  /**
+   * Handle clicking a saved position to remove it.
+   * @param {PointerEvent} event      The initiating click event.
+   */
+  _onClickIdx(event) {
+    const sequence = [...this.model.sequence];
+    const idx = event.currentTarget.dataset.idx;
+    sequence.splice(idx, 1);
+    this.model.updateSource({sequence});
+    this.render();
   }
 
   /** Handle click events on the canvas. */
@@ -112,7 +117,7 @@ export class SequencePicker extends Dialog {
   async render(...args) {
     this._destroySprites();
     const points = this.model.sequence;
-    const img = "icons/sundries/flags/banner-flag-blue.webp";
+    const img = this.constructor.PLACED_IMG;
     this.sprites = new Set();
     for (const point of points) {
       const spr = PIXI.Sprite.from(img);
@@ -121,7 +126,7 @@ export class SequencePicker extends Dialog {
       spr.height = spr.width = canvas.grid.size;
       const sprite = canvas.effects.addChildAt(spr, point);
       const mask = new PIXI.Graphics()
-        .beginFill("WHITE",1)
+        .beginFill("WHITE", 1)
         .drawCircle(0, 0, 0.5 * sprite.texture.baseTexture.width)
         .endFill();
       sprite.addChild(mask);
@@ -138,6 +143,13 @@ export class SequencePicker extends Dialog {
     this.callback(null);
     return super.close(...args);
   }
+
+  /** @override */
+  setPosition(pos = {}) {
+    pos.height = "auto";
+    return super.setPosition(pos);
+  }
+
 
   /**
    * Create an instance of this application and wait for the callback.
