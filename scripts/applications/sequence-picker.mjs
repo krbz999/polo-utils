@@ -115,7 +115,7 @@ export class SequencePicker extends Dialog {
     const img = "icons/sundries/flags/banner-flag-blue.webp";
     this.sprites = new Set();
     for (const point of points) {
-      const spr = PIXI.Sprite.from(img, {scale: 0.5});
+      const spr = PIXI.Sprite.from(img);
       Object.assign(spr, point);
       spr.anchor.set(0.5);
       spr.height = spr.width = canvas.grid.size;
