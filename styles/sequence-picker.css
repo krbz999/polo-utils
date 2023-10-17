@@ -13,7 +13,7 @@
   height: 50px;
   border: none;
 }
-.sequence-picker .link img.inactive {
+.polo-utils-sequence-picker .link img.inactive {
   filter: grayscale(1);
 }
 .sequence-picker .label {
