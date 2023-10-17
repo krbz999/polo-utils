@@ -50,7 +50,7 @@ export class SequencePicker extends Dialog {
       resizeable: false,
       minimizable: false,
       template: "modules/polo-utils/templates/applications/sequence-picker.hbs",
-      classes: ["sequence-picker"],
+      classes: ["polo-utils-sequence-picker"],
       width: 200
     });
   }
